@@ -8,10 +8,15 @@
 </head>
 
 <body>
-<div id="quiz"></div>
-
+<!-- //create divs for quiz -->
+<div class ="quiz-container">
+    <div id="quiz"></div>
+</div>
+<!-- //create divs for buttons -->
+<button id="previous">Previous Question</button>
+<button id="next">Next Question</button>
 <button id="submit">Submit Quiz</button>
-
+<!-- //create div for results  -->
 <div id="results"></div>
 
 
@@ -30,8 +35,7 @@ quizQuest.forEach(
     var answers = [];
     // and for each available answer...
     for(letter in currentQuestion.answers){
-
-      // ...add an HTML radio button
+    // ...add an HTML radio button
       answers.push(
         `<label>
           <input type="radio" name="question${questionNumber}" value="${letter}">
@@ -40,7 +44,6 @@ quizQuest.forEach(
         </label>`
       );
     }
-
     // add this question and its answers to the output
     output.push(
       `<div class="question"> ${currentQuestion.question} </div>
@@ -48,11 +51,9 @@ quizQuest.forEach(
     );
   }
 );
-
 // finally combine our output list into one string of HTML and put it on the page
 quizContainer.innerHTML = output.join('');
 };
-
 function showResults(){
 // gather answer containers from our quiz.
 var answerContainers = quizContainer.querySelectorAll('.answers');
