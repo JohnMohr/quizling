@@ -81,20 +81,26 @@ quizQuest.forEach((currentQuestion, questionNumber) => {
 resultsContainer.innerHTML = `${numCorrect} out of ${quizQuest.length}`;
 };
 function showSlide(n) {
+    //hide current slide by removing the active slide class
   slides[currentSlide].classList.remove('active-slide');
+    //show the new slide by adding the active-slide class
   slides[n].classList.add('active-slide');
+    //update the current sldie number
   currentSlide = n;
+    //if we are on the first slide don't show the previous button
   if(currentSlide === 0){
     previousButton.style.display = 'none';
   }
+    // show the previous button if its past the first slide
   else{
     previousButton.style.display = 'inline-block';
   }
+    //if its the last slide don't show the next button
   if(currentSlide === slides.length-1){
     nextButton.style.display = 'none';
     submitButton.style.display = 'inline-block';
   }
-  else{
+  else{ //if its not the last slide show the next button. also only show submit if it is the last slide.
     nextButton.style.display = 'inline-block';
     submitButton.style.display = 'none';
   }
