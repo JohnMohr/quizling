@@ -54,25 +54,23 @@ quizContainer.innerHTML = output.join('');
 };
 
 function showResults(){
-// gather answer containers from our quiz
+// gather answer containers from our quiz.
 var answerContainers = quizContainer.querySelectorAll('.answers');
-
-// keep track of user's answers
+// keep track of user's answers.
 numCorrect = 0;
-
 // for each question...
 quizQuest.forEach((currentQuestion, questionNumber) => {
-  // find selected answer
+// find selected answer.
   var answerContainer = answerContainers[questionNumber];
   var selector = `input[name=question${questionNumber}]:checked`;
   var userAnswer = (answerContainer.querySelector(selector) || {}).value;
-  // if correct add to correct answers
+// if correct add to correct answers.
   if(userAnswer === currentQuestion.correctAnswer){
         numCorrect++;
-    // color the answers green
+// color the answers green.
     answerContainers[questionNumber].style.color = 'lightgreen';
   }
-  // if answer is wrong or blank color the answers red
+// if answer is wrong or blank, color the answers red.
   else{
     answerContainers[questionNumber].style.color = 'red';
   }
@@ -86,37 +84,49 @@ var resultsContainer = document.getElementById('results');
 var submitButton = document.getElementById('submit');
 var quizQuest = [
   {
-    question: "Who invented JavaScript?",
+    question: "Which of the following is a 'keystone species' in the Pacific Northwest?",
     answers: {
-      a: "Douglas Crockford",
-      b: "Sheryl Sandberg",
-      c: "Brendan Eich"
+      a: "Liger",
+      b: "Boreal Toad",
+      c: "Salmon",
+      d: "Hipster"
     },
     correctAnswer: "c"
   },
   {
-    question: "Which one of these is a JavaScript package manager?",
+    question: "Farm-raised '_______' are fed carotenoids astaxanthin and canthaxanthin to match their flesh colour to wild '________'.",
     answers: {
-      a: "Node.js",
-      b: "TypeScript",
-      c: "npm"
+      a: "Chickens",
+      b: "Salmons",
+      c: "Chameleons",
+      d: "Snakes"
     },
-    correctAnswer: "c"
+    correctAnswer: "b"
   },
   {
-    question: "Which tool can you use to ensure code quality?",
+    question: "Within the Haida nation, Salmon are referred to as '______'.",
     answers: {
-      a: "Angular",
-      b: "jQuery",
-      c: "RequireJS",
-      d: "ESLint"
+      a: "hadouken",
+      b: "shoryuken",
+      c: "Lachs",
+      d: "tsiin"
     },
     correctAnswer: "d"
+  },
+  {
+      question: "In Norse mythology, after Loki tricked the blind god Höðr into killing his brother Baldr, Loki jumped into a river and transformed himself into a '_______' to escape punishment from the other gods. When they held out a net to trap him he attempted to leap over it but was caught by Thor who grabbed him by the tail with his hand, and this is why the '_______'s' tail is tapered",
+      answers: {
+          a:"Salmon",
+          b:"Beaver",
+          c:"Armadillo",
+          d:"Mastodon"
+      },
+    correcetAnswer: "a"
   }
 ];
-// display quiz
+// display quality quiz
 buildQuiz();
-// on submit, show results
+// on submit, show results!
 submitButton.addEventListener('click', showResults);
 })();
 </script>
