@@ -76,7 +76,7 @@ quizQuest.forEach((currentQuestion, questionNumber) => {
   }
 });
 // show number of correct answers out of total
-resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
+resultsContainer.innerHTML = `${numCorrect} out of ${quizQuest.length}`;
 };
 //variables
 var quizContainer = document.getElementById('quiz');
@@ -106,10 +106,10 @@ var quizQuest = [
   {
     question: "Within the Haida nation, Salmon are referred to as '______'.",
     answers: {
-      a: "hadouken",
-      b: "shoryuken",
+      a: "Hadouken",
+      b: "Shoryuken",
       c: "Lachs",
-      d: "tsiin"
+      d: "Tsiin"
     },
     correctAnswer: "d"
   },
@@ -121,7 +121,7 @@ var quizQuest = [
           c:"Armadillo",
           d:"Mastodon"
       },
-    correcetAnswer: "a"
+    correctAnswer: "a"
   }
 ];
 // display quality quiz
