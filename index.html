@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 <div id="quiz"></div>
 
@@ -15,18 +17,17 @@
 
 
 <script>
-//functions
+(function(){
+    //functions
 function buildQuiz(){
-     // variable to store the HTML output
+    // variable to store the HTML output
   var output = [];
 
 // for each question...
 quizQuest.forEach(
   (currentQuestion, questionNumber) => {
-
-    // variable to store the list of possible answers
+    // variable to store the list of answers
     var answers = [];
-
     // and for each available answer...
     for(letter in currentQuestion.answers){
 
@@ -52,7 +53,33 @@ quizQuest.forEach(
 quizContainer.innerHTML = output.join('');
 };
 
-function showResults(){};
+function showResults(){
+// gather answer containers from our quiz
+var answerContainers = quizContainer.querySelectorAll('.answers');
+
+// keep track of user's answers
+numCorrect = 0;
+
+// for each question...
+quizQuest.forEach((currentQuestion, questionNumber) => {
+  // find selected answer
+  var answerContainer = answerContainers[questionNumber];
+  var selector = `input[name=question${questionNumber}]:checked`;
+  var userAnswer = (answerContainer.querySelector(selector) || {}).value;
+  // if correct add to correct answers
+  if(userAnswer === currentQuestion.correctAnswer){
+        numCorrect++;
+    // color the answers green
+    answerContainers[questionNumber].style.color = 'lightgreen';
+  }
+  // if answer is wrong or blank color the answers red
+  else{
+    answerContainers[questionNumber].style.color = 'red';
+  }
+});
+// show number of correct answers out of total
+resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
+};
 //variables
 var quizContainer = document.getElementById('quiz');
 var resultsContainer = document.getElementById('results');
@@ -91,13 +118,7 @@ var quizQuest = [
 buildQuiz();
 // on submit, show results
 submitButton.addEventListener('click', showResults);
-
-
-
-
-
-
-
+})();
 </script>
     
 </body>
