@@ -3,16 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Blubber Doom</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+    <h1>A very important animal</h1>
+    <p>Welcome to your doom. You have <span id="welcomeTime"></span></p> to complete the task. You will be deducted 10s of life for each screw-up.
+     Whomever approaches the Manatee lords must answer <span id="quizLength"></span> or feel their blubbery wrath.
 <!-- //create divs for quiz -->
 <div class ="quiz-container">
     <div id="quiz"></div>
 </div>
 <!-- //create divs for buttons -->
+<button id="start">Start the Quiz!</button>
 <button id="previous">Previous Question</button>
 <button id="next">Next Question</button>
 <button id="submit">Submit Quiz</button>
@@ -22,6 +26,89 @@
 
 
 <script>
+
+//variables
+
+//quiz timer
+const initialTime = quizQuest.length * 10;
+const timer = initialTime;
+
+welcomeTime.textContent = formatTime();
+quizLength.textContent = quizQuest.length;
+
+
+var quizContainer = document.getElementById('quiz');
+var resultsContainer = document.getElementById('results');
+var submitButton = document.getElementById('submit');
+var quizQuest = [
+  {
+    question: "Which of the following is a 'keystone species' in the Pacific Northwest?",
+    answers: {
+      a: "Liger",
+      b: "Boreal Toad",
+      c: "Salmon",
+      d: "Hipster"
+    },
+    correctAnswer: "c"
+  },
+  {
+    question: "Farm-raised '_______' are fed carotenoids astaxanthin and canthaxanthin to match their flesh colour to wild '________'.",
+    answers: {
+      a: "Chickens",
+      b: "Salmons",
+      c: "Chameleons",
+      d: "Snakes"
+    },
+    correctAnswer: "b"
+  },
+  {
+    question: "Within the Haida nation, Salmon are referred to as '______'.",
+    answers: {
+      a: "Hadouken",
+      b: "Shoryuken",
+      c: "Lachs",
+      d: "Tsiin"
+    },
+    correctAnswer: "d"
+  },
+  {
+      question: "In Norse mythology, after Loki tricked the blind god Höðr into killing his brother Baldr, Loki jumped into a river and transformed himself into a '_______' to escape punishment from the other gods. When they held out a net to trap him he attempted to leap over it but was caught by Thor who grabbed him by the tail with his hand, and this is why the '_______'s' tail is tapered",
+      answers: {
+          a:"Salmon",
+          b:"Beaver",
+          c:"Armadillo",
+          d:"Mastodon"
+      },
+    correctAnswer: "a"
+  }
+];
+// display quality quiz
+buildQuiz();
+//pagination
+var startButton = document.getElementById('start')
+var previousButton = document.getElementById("previous");
+var nextButton = document.getElementById("next");
+var slides = document.querySelectorAll(".slide")
+currentSlide = 0;
+//show the first slide
+showSlide(currentSlide);
+// on submit, show results!
+submitButton.addEventListener('click', showResults);
+previousButton.addEventListener("click", showPreviousSlide);
+nextButton.addEventListener("click", showNextSlide);
+
+function formatTime() {
+  const minutes = Math.floor(timer / 60);
+  const seconds = timer % 60;
+  if (seconds < 10) {
+    seconds = "0" + seconds;
+  }
+  return minutes + ":" + seconds;
+
+}
+
+
+
 (function(){
     //functions
 function buildQuiz(){
@@ -105,63 +192,13 @@ function showSlide(n) {
     submitButton.style.display = 'none';
   }
 }
-//variables
-var quizContainer = document.getElementById('quiz');
-var resultsContainer = document.getElementById('results');
-var submitButton = document.getElementById('submit');
-var quizQuest = [
-  {
-    question: "Which of the following is a 'keystone species' in the Pacific Northwest?",
-    answers: {
-      a: "Liger",
-      b: "Boreal Toad",
-      c: "Salmon",
-      d: "Hipster"
-    },
-    correctAnswer: "c"
-  },
-  {
-    question: "Farm-raised '_______' are fed carotenoids astaxanthin and canthaxanthin to match their flesh colour to wild '________'.",
-    answers: {
-      a: "Chickens",
-      b: "Salmons",
-      c: "Chameleons",
-      d: "Snakes"
-    },
-    correctAnswer: "b"
-  },
-  {
-    question: "Within the Haida nation, Salmon are referred to as '______'.",
-    answers: {
-      a: "Hadouken",
-      b: "Shoryuken",
-      c: "Lachs",
-      d: "Tsiin"
-    },
-    correctAnswer: "d"
-  },
-  {
-      question: "In Norse mythology, after Loki tricked the blind god Höðr into killing his brother Baldr, Loki jumped into a river and transformed himself into a '_______' to escape punishment from the other gods. When they held out a net to trap him he attempted to leap over it but was caught by Thor who grabbed him by the tail with his hand, and this is why the '_______'s' tail is tapered",
-      answers: {
-          a:"Salmon",
-          b:"Beaver",
-          c:"Armadillo",
-          d:"Mastodon"
-      },
-    correctAnswer: "a"
-  }
-];
-// display quality quiz
-buildQuiz();
-//pagination
-var previousButton = document.getElementById("previous");
-var nextButton = document.getElementById("next");
-var slides = document.querySelectorAll(".slide")
-currentSlide = 0;
-//show the first slide
-showSlide(currentSlide);
-// on submit, show results!
-submitButton.addEventListener('click', showResults);
+function showNextSlide() {
+  showSlide(currentSlide + 1);
+}
+function showPreviousSlide() {
+  showSlide(currentSlide - 1);
+}
+
 })();
 </script>
     
