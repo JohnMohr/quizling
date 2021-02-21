@@ -10,7 +10,7 @@
 <body>
     <h1>A very important animal</h1>
     <p>Welcome to your doom. You have <span id="welcomeTime"></span></p> to complete the task. You will be deducted 10s of life for each screw-up.
-     Whomever approaches the Manatee lords must answer <span id="quizLength"></span> or feel their blubbery wrath.
+     Whomever approaches the Salmon lords must answer <span id="quizLength"></span> or feel their delicious wrath.
 <!-- //create divs for quiz -->
 <div class ="quiz-container">
     <div id="quiz"></div>
@@ -26,6 +26,99 @@
 
 
 <script>
+
+
+
+
+(function(){
+    //functions
+function buildQuiz(){
+    // variable to store the HTML output
+  var output = [];
+    // for each question...
+quizQuest.forEach(
+  (currentQuestion, questionNumber) => {
+    // variable to store the list of answers
+    var answers = [];
+    // and for each available answer...
+    for(letter in currentQuestion.answers){
+    // ...add an HTML radio button
+      answers.push(
+        `<label>
+          <input type="radio" name="question${questionNumber}" value="${letter}">
+          ${letter} :
+          ${currentQuestion.answers[letter]}
+        </label>`
+      );
+    }
+    // add this question and its answers to the output
+    output.push(
+        `<div class="slide">
+            <div class="question"> ${currentQuestion.question} </div>
+            <div class="answers"> ${answers.join("")} </div>
+          </div>`
+    );
+  }
+);
+// finally combine our output list into one string of HTML and put it on the page
+quizContainer.innerHTML = output.join('');
+};
+function showResults(){
+// gather answer containers from our quiz.
+var answerContainers = quizContainer.querySelectorAll('.answers');
+// keep track of user's answers.
+numCorrect = 0;
+// for each question...
+quizQuest.forEach((currentQuestion, questionNumber) => {
+// find selected answer.
+  var answerContainer = answerContainers[questionNumber];
+  var selector = `input[name=question${questionNumber}]:checked`;
+  var userAnswer = (answerContainer.querySelector(selector) || {}).value;
+// if correct add to correct answers.
+  if(userAnswer === currentQuestion.correctAnswer){
+        numCorrect++;
+// color the answers green.
+    answerContainers[questionNumber].style.color = 'lightgreen';
+  }
+// if answer is wrong or blank, color the answers red.
+  else{
+    answerContainers[questionNumber].style.color = 'red';
+  }
+});
+// show number of correct answers out of total
+resultsContainer.innerHTML = `${numCorrect} out of ${quizQuest.length}`;
+};
+function showSlide(n) {
+    //hide current slide by removing the active slide class
+  slides[currentSlide].classList.remove('active-slide');
+    //show the new slide by adding the active-slide class
+  slides[n].classList.add('active-slide');
+    //update the current sldie number
+  currentSlide = n;
+    //if we are on the first slide don't show the previous button
+  if(currentSlide === 0){
+    previousButton.style.display = 'none';
+  }
+    // show the previous button if its past the first slide
+  else{
+    previousButton.style.display = 'inline-block';
+  }
+    //if its the last slide don't show the next button
+  if(currentSlide === slides.length-1){
+    nextButton.style.display = 'none';
+    submitButton.style.display = 'inline-block';
+  }
+  else{ //if its not the last slide show the next button. also only show submit if it is the last slide.
+    nextButton.style.display = 'inline-block';
+    submitButton.style.display = 'none';
+  }
+}
+function showNextSlide() {
+  showSlide(currentSlide + 1);
+}
+function showPreviousSlide() {
+  showSlide(currentSlide - 1);
+}
 
 //variables
 
@@ -156,97 +249,38 @@ else{
 displayScores(score);
 }
 
+// display score list after quiz
+function displayScores(testScore) {
 
+console.log(`displayScores(${testScore}) fires`)
+// console.log("testScore: ", testScore);
 
-(function(){
-    //functions
-function buildQuiz(){
-    // variable to store the HTML output
-  var output = [];
-    // for each question...
-quizQuest.forEach(
-  (currentQuestion, questionNumber) => {
-    // variable to store the list of answers
-    var answers = [];
-    // and for each available answer...
-    for(letter in currentQuestion.answers){
-    // ...add an HTML radio button
-      answers.push(
-        `<label>
-          <input type="radio" name="question${questionNumber}" value="${letter}">
-          ${letter} :
-          ${currentQuestion.answers[letter]}
-        </label>`
-      );
+scoreList.innerHTML = "";
+
+// get score list from local storage
+var scores = JSON.parse(localStorage.getItem("scores"));
+
+// loop through scores and place in ol    
+for (var i = 0; i < scores.length; i++) {
+    var score = document.createElement("div");
+    score.setAttribute("Class", "highScore");
+
+    // console.log(`testScore.date: ${testScore.date} ?= scores[${i}].date: ${scores[i].date}`);
+
+    // set text to score
+    score.textContent = `${i+1}. ${scores[i].initials}  ${scores[i].score}`;
+
+    // test if score is from quiz just taken then add class and message if so
+    if (scores[i].date === testScore.date) {
+        score.setAttribute("class", "highScore yourScore");
+        score.textContent += " - your score!";
     }
-    // add this question and its answers to the output
-    output.push(
-        `<div class="slide">
-            <div class="question"> ${currentQuestion.question} </div>
-            <div class="answers"> ${answers.join("")} </div>
-          </div>`
-    );
-  }
-);
-// finally combine our output list into one string of HTML and put it on the page
-quizContainer.innerHTML = output.join('');
-};
-function showResults(){
-// gather answer containers from our quiz.
-var answerContainers = quizContainer.querySelectorAll('.answers');
-// keep track of user's answers.
-numCorrect = 0;
-// for each question...
-quizQuest.forEach((currentQuestion, questionNumber) => {
-// find selected answer.
-  var answerContainer = answerContainers[questionNumber];
-  var selector = `input[name=question${questionNumber}]:checked`;
-  var userAnswer = (answerContainer.querySelector(selector) || {}).value;
-// if correct add to correct answers.
-  if(userAnswer === currentQuestion.correctAnswer){
-        numCorrect++;
-// color the answers green.
-    answerContainers[questionNumber].style.color = 'lightgreen';
-  }
-// if answer is wrong or blank, color the answers red.
-  else{
-    answerContainers[questionNumber].style.color = 'red';
-  }
-});
-// show number of correct answers out of total
-resultsContainer.innerHTML = `${numCorrect} out of ${quizQuest.length}`;
-};
-function showSlide(n) {
-    //hide current slide by removing the active slide class
-  slides[currentSlide].classList.remove('active-slide');
-    //show the new slide by adding the active-slide class
-  slides[n].classList.add('active-slide');
-    //update the current sldie number
-  currentSlide = n;
-    //if we are on the first slide don't show the previous button
-  if(currentSlide === 0){
-    previousButton.style.display = 'none';
-  }
-    // show the previous button if its past the first slide
-  else{
-    previousButton.style.display = 'inline-block';
-  }
-    //if its the last slide don't show the next button
-  if(currentSlide === slides.length-1){
-    nextButton.style.display = 'none';
-    submitButton.style.display = 'inline-block';
-  }
-  else{ //if its not the last slide show the next button. also only show submit if it is the last slide.
-    nextButton.style.display = 'inline-block';
-    submitButton.style.display = 'none';
-  }
+    scoreList.appendChild(score);
 }
-function showNextSlide() {
-  showSlide(currentSlide + 1);
+
 }
-function showPreviousSlide() {
-  showSlide(currentSlide - 1);
-}
+
+
 
 })();
 </script>
