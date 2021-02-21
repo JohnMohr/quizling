@@ -13,7 +13,7 @@
     <div class="row" id="welcomeDiv">
       <div class="col-md-12">
         <div>
-          <h1>A very important animal</h1>
+          <h1 class="text-center">A very important animal</h1>
           <p>Welcome to your doom. You have <span id="welcomeTime"></span> to complete the task. You will be
             deducted 10s of life for each screw-up.
             Whomever approaches the Salmon lords must answer <span id="quizLength"></span> or feel their delicious
@@ -26,7 +26,9 @@
     <!-- //create divs for quiz -->
     <div class="quiz-container">
       <div id="quiz"></div>
+
     </div>
+    
     <div class="row">
       <div class="col-md-4" id="timer">
         <span id="timerText">0:40</span>
@@ -43,7 +45,7 @@
         <div id="scoreDiv">
           <h2 class="text-center">High Scores</h2>
           <div id="scoreList"></div>
-          <button id="retry" class="btn btn-primary">Retry Quiz</button>
+          <button id="retry">Retry Quiz</button>
         </div>
       </div>
     </div>
@@ -130,6 +132,7 @@
 
       welcomeTime.textContent = formatTime();
       quizLength.textContent = questions.length;
+      const questionNumber = 0;
 
       ////FUNCTIONS
 
@@ -311,23 +314,13 @@
         timerContainer.style.backgroundColor = "black";
         buildQuiz();
       }
-
       
-
-      //quiz questions 
-      
-
-      // display quality quiz
-      buildQuiz();
-
-
       currentSlide = 0;
       //show the first slide
       showSlide(currentSlide);
+      ////QUIZ
+      buildQuiz();
       
-
-
-
     })();
   </script>
 
