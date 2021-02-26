@@ -1,3 +1,27 @@
+// declare html element variables
+var timeLeft = document.querySelector("#timer");
+var startButton = document.querySelector("#start");
+var introText = document.querySelector("#intro");
+var titleText = document.querySelector("#big-text")
+var questionText = document.querySelector("#question-text")
+var choiceList = document.querySelector("#choices");
+var userStats = document.querySelector("#user-stats")
+var userScore = document.querySelector("#score-display")
+var userInitials = document.querySelector("#initials-input");
+var submitButton = document.querySelector("#submit-button");
+var userResults = document.querySelector("#results");
+var highScores = document.querySelector("#highscores");
+var startTime = 60;
+var score = 0;
+var index = 0;
+
+var user = {
+    initials: userInitials.value,
+    userScore: userScore.value
+};
+
+userStats.style.display = "none";
+
 //// QUIZ CONTENT
 const quiz = [
     {
@@ -29,35 +53,8 @@ const quiz = [
         question: "What is the average pace of a salmon in the Saltwater phase of their life?",
         answers: ["12 miles per day","100 miles per day","18 miles per day","3.14159 miles per day"],
         correctAnswer: "18 miles per day"
-    }
+    },
 ];
-
-
-
-
-// declare html element variables
-var timeLeft = document.querySelector("#timer");
-var startButton = document.querySelector("#start");
-var introText = document.querySelector("#intro");
-var titleText = document.querySelector("#big-text")
-var questionText = document.querySelector("#question-text")
-var choiceList = document.querySelector("#choices");
-var userStats = document.querySelector("#user-stats")
-var userScore = document.querySelector("#score-display")
-var userInitials = document.querySelector("#initials-input");
-var submitButton = document.querySelector("#submit");
-var userResults = document.querySelector("#results");
-var highScores = document.querySelector("#highscores");
-var startTime = 60;
-var score = 0;
-var index = 0;
-
-var user = {
-    initials: userInitials.value,
-    userScore: userScore.value
-};
-
-userStats.style.display = "none";
 
 
 
@@ -81,7 +78,7 @@ function renderQuiz() {
     }
 
     // When time runs out or we run out of questions, display the user's stats
-    if (startTime <= 0 || index === 9) {
+    if (startTime <= 0 || index === 5) {
         choiceList.style.display = "none";
         timeLeft.style.display = "none";
         questionText.textContent = "";
@@ -89,7 +86,7 @@ function renderQuiz() {
         userScore.value = score;
 
         // Scorecard message changes based on user's score
-        if (score >= 5) {
+        if (score >= 4) {
             userResults.textContent = "You really know your Salmon!"
         }
         else {

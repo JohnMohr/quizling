@@ -39,7 +39,7 @@ label {
 }
 
 #highscores {
-    background-color: #ffffe6;
+    background-color: darksalmon;
     border: none;
 }
 #highscores:hover {
@@ -51,11 +51,11 @@ label {
     border: none;
     color: #ffffe6;
 }
-#start:hover, #submit:hover {
+#start:hover, #submit-buton:hover {
 	background-color: darksalmon;  
   }
 
-#submit {
+#submit-button {
     background-color: darkslateblue;
     border: none;
     color: #ffffe6;
@@ -73,11 +73,11 @@ li {
     padding-left: 20px;
     padding-right: 20px;
     background-color: darksalmon;
-    color: #ffffe6;
+    color: darkslategray;
     font-size: 1.5em;
     line-height: 1.5;
   }
   li:hover {
-	background-color: black;
+	background-color: darkslateblue;
 	color:white;
 }
