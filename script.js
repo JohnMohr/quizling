@@ -21,7 +21,7 @@ const questions = [
         correctAnswer: "b"
     },
     {
-        question: "Within the Haida nation, Salmon are referred to as '______'.",
+        question: "Within the Haida nation, Salmon are referred to as '______'.?",
         answers: {
             a: "Hadouken",
             b: "Shoryuken",
@@ -39,28 +39,72 @@ const questions = [
             d: "Mastodon"
         },
         correctAnswer: "a"
+    },
+    {
+        question: "Salmon have a strong sense of '______'.",
+        answers: {
+            a: "Taste",
+            b: "Self",
+            c: "Purpose",
+            d: "Smell"
+        },
+        correctAnswer: "d"
+    },
+    {
+        question: "What is the average pace of a salmon in the Saltwater phase of their life?",
+        answers: {
+            a: "12 miles per day",
+            b: "100 miles per day",
+            c: "18 miles per day",
+            d: "3.14159 miles per day"
+        },
+        correctAnswer: "c"
     }
 ];
 
 
-// declare variable used for setInterval globally
-var quizLoop;
+
 
 // declare html element variables
 var timerContainer = document.querySelector("#timer");
-var welcomeDiv = document.querySelector("#welcomeDiv");
-var displayTimerDiv = document.querySelector("#timerText");
-var questionDiv = document.querySelector("#question");    
-var scoreDiv = document.querySelector("#scoreDiv");
-var startBtn = document.querySelector("#startBtn");
-var pathRemaining = document.querySelector("#pathRemaining");
-var retryBtn = document.querySelector("#retryBtn");
-var scoreList = document.querySelector("#scoreList");
-var welcomeTimeMessage = document.querySelector("#welcomeTimeMessage");
-var quizLengthMessage = document.querySelector("#quizLengthMessage");
+var startButton = document.querySelector("#start");
+var introText = document.querySelector("#intro");
+var titleText = document.querySelector("#big-text")
+var questionText = document.querySelector("#question-text")
+var chocieList = document.querySelector("#choices");
+var userStats = document.querySelector("#user-stats")
+var userScore = document.querySelector("#score-display")
+var userInitials = document.querySelector("#initials-input");
+var submitButton = document.querySelector("#submit");
+var userResults = document.querySelector("#results");
+var highScores = document.querySelector("#highscores");
+var startTime = 60;
+var score = 0;
+var index = 0;
+
+var user = {
+    initials: userInitials.value,
+    userScore: userScore.value
+};
+
+userStats.style.display = "none";
+
+
+function countDown() {
+    var timeInterval = setInterval(function () {
+        startTime--;
+        timeLeft.textContent = "Time Remaining: " + startTime;
+        if (startTime === 0) {
+            clearInterval(timeInterval);
+        }
+    }, 1000);
+}
+
+
+
 
 // declare event listener to begin quiz
-startBtn.addEventListener("click", runQuiz);
+startButton.addEventListener("click", runQuiz);
 retryBtn.addEventListener("click", retryQuiz);
 
 // create quiz timer variable and initial value - used for % remaining calc
@@ -72,6 +116,8 @@ quizLengthMessage.textContent = questions.length;
 
 // create variable to hold current question number
 var questionNumber = 0;
+
+
 
 //main function holds timer and asks first question
 function runQuiz() {
