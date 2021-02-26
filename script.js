@@ -2,71 +2,41 @@
 const quiz = [
     {
         question: "Which of the following is a 'keystone species' in the Pacific Northwest?",
-        answers: {
-            a: "Liger",
-            b: "Boreal Toad",
-            c: "Salmon",
-            d: "Hipster"
-        },
-        correctAnswer: "c"
+        answers: ["Liger","Boreal Toad","Salmon","Hipster"],
+        correctAnswer: "Salmon"
     },
     {
         question: "Farm-raised '_______' are fed carotenoids astaxanthin and canthaxanthin to match their flesh colour to wild '________'.",
-        answers: {
-            a: "Chickens",
-            b: "Salmons",
-            c: "Chameleons",
-            d: "Snakes"
-        },
-        correctAnswer: "b"
+        answers: ["Chickens","Salmons","Chameleons","Snakes"],
+        correctAnswer: "Salmons"
     },
     {
         question: "Within the Haida nation, Salmon are referred to as '______'.?",
-        answers: {
-            a: "Hadouken",
-            b: "Shoryuken",
-            c: "Lachs",
-            d: "Tsiin"
-        },
-        correctAnswer: "d"
+        answers: ["Hadouken","Shoryuken","Lachs","Tsiin"],
+        correctAnswer: "Tsiin"
     },
     {
         question: "In Norse mythology, after Loki tricked the blind god Höðr into killing his brother Baldr, Loki jumped into a river and transformed himself into a '_______' to escape punishment from the other gods. When they held out a net to trap him he attempted to leap over it but was caught by Thor who grabbed him by the tail with his hand, and this is why the '_______'s' tail is tapered",
-        answers: {
-            a: "Salmon",
-            b: "Beaver",
-            c: "Armadillo",
-            d: "Mastodon"
-        },
-        correctAnswer: "a"
+        answers: ["Salmon","Beaver","Armadillo","Mastodon"],
+        correctAnswer: "Salmon"
     },
     {
         question: "Salmon have a strong sense of '______'.",
-        answers: {
-            a: "Taste",
-            b: "Self",
-            c: "Purpose",
-            d: "Smell"
-        },
-        correctAnswer: "d"
+        answers: ["Taste","Self","Purpose","Smell"],
+        correctAnswer: "Smell"
     },
     {
         question: "What is the average pace of a salmon in the Saltwater phase of their life?",
-        answers: {
-            a: "12 miles per day",
-            b: "100 miles per day",
-            c: "18 miles per day",
-            d: "3.14159 miles per day"
-        },
-        correctAnswer: "c"
+        answers: ["12 miles per day","100 miles per day","18 miles per day","3.14159 miles per day"],
+        correctAnswer: "18 miles per day"
     }
 ];
 
 
-
+timeLeft
 
 // declare html element variables
-var timerContainer = document.querySelector("#timer");
+var timeLeft = document.querySelector("#timer");
 var startButton = document.querySelector("#start");
 var introText = document.querySelector("#intro");
 var titleText = document.querySelector("#big-text")
