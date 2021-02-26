@@ -33,7 +33,7 @@ const quiz = [
 ];
 
 
-timeLeft
+
 
 // declare html element variables
 var timeLeft = document.querySelector("#timer");
@@ -63,7 +63,7 @@ userStats.style.display = "none";
 function countDown() {
     var timeInterval = setInterval(function () {
         startTime--;
-        timeLeft.textContent = "Time Remaining: " + startTime;
+        timeLeft.textContent = "Salmon Seconds: " + startTime;
         if (startTime === 0) {
             clearInterval(timeInterval);
         }
@@ -89,10 +89,10 @@ function renderQuiz() {
 
         // Scorecard message changes based on user's score
         if (score >= 5) {
-            userResults.textContent = "Flame-o, Hotman! Brag to your friends!"
+            userResults.textContent = "You really know your Salmon!"
         }
         else {
-            userResults.textContent = "That's rough, buddy. Tell everyone how much you suck."
+            userResults.textContent = "It's okay, buddy. The Salmon aren't real. They can't hurt you."
         }
 
         // When user submits their data, it will be collected and stored in local storage
@@ -102,7 +102,7 @@ function renderQuiz() {
                 userResults.textContent = "Please enter your initials!"
             }
             else {
-                userResults.textContent = "Success! Everyone knows your score now!"
+                userResults.textContent = "Success! You will be remembered in the Salmon halls"
                 // Send user data to local storage
                 localStorage.setItem("user", JSON.stringify(user));
             }
