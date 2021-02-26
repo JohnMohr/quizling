@@ -4,6 +4,21 @@ body{
     color: ivory;
     background-color: darkslategrey
 }
+
+main{
+	margin-top: 10vh;
+}
+
+#timer {
+	background-color:darksalmon;
+	padding: 5px;
+}
+
+.col-8, .col-2 {
+    display: flex;
+    justify-content: center;
+}
+
 h1{
     font-weight: 300;
     margin: 0px;
