@@ -100,6 +100,83 @@ function countDown() {
     }, 1000);
 }
 
+function renderQuiz() {
+    chocieList.textContent = "";
+    questionText.textContent = quiz[index].question;
+    for (i = 0; i < quiz[index].answers.length; i++) {
+        var answerList = document.createElement("li");
+        answerList.textContent = quiz[index].answers[i];
+        chocieList.appendChild(answerList);
+    }
+
+    // When time runs out or we run out of questions, display the user's stats
+    if (startTime <= 0 || index === 9) {
+        chocieList.style.display = "none";
+        timeLeft.style.display = "none";
+        questionText.textContent = "";
+        userStats.style.display = "block";
+        userScore.value = score;
+
+        // Scorecard message changes based on user's score
+        if (score >= 5) {
+            userResults.textContent = "Flame-o, Hotman! Brag to your friends!"
+        }
+        else {
+            userResults.textContent = "That's rough, buddy. Tell everyone how much you suck."
+        }
+
+        // When user submits their data, it will be collected and stored in local storage
+        submitButton.addEventListener("click", function (event) {
+            event.preventDefault();
+            if (userInitials.value === "") {
+                userResults.textContent = "Please enter your initials!"
+            }
+            else {
+                userResults.textContent = "Success! Everyone knows your score now!"
+                // Send user data to local storage
+                localStorage.setItem("user", JSON.stringify(user));
+            }
+            userInitials.value = "";
+            userScore.value = "";
+        })
+    }
+}
+
+startButton.addEventListener("click", function () {
+    countDown();
+    introText.textContent = "";
+    titleText.textContent = "";
+    startButton.style.display = "none";
+    renderQuiz();
+})
+
+document.querySelector("#choices").addEventListener("click", function (event) {
+    if (event.target.textContent === quiz[index].correctAnswer) {
+        score++;
+        console.log(score);
+    }
+    else {
+        startTime = startTime - 10;
+    }
+    // Repeat the function for the next index in the quiz array
+    index++;
+    renderQuiz();
+})
+
+highScores.addEventListener("click", function () {
+    questionText.textContent = "";
+    userStats.style.display = "block";
+    introText.textContent = "";
+    titleText.textContent = "";
+    startButton.style.display = "none";
+    userResults.textContent = "Here ya go, nosy!";
+    userInitials.value = lastHighScore.initials;
+    userScore.value = lastHighScore.score;
+    
+})
+
+
+console.log(lastHighScore);
 
 
 
