@@ -1,5 +1,5 @@
 //// QUIZ CONTENT
-let questions = [
+const questions = [
     {
         question: "Which of the following is a 'keystone species' in the Pacific Northwest?",
         answers: {
@@ -43,71 +43,88 @@ let questions = [
 ];
 
 
-let quizLoop;
-////VARIABLES
-const timerContainer = document.querySelector('#timer')
-const welcomeDiv = document.querySelector("#welcomeDiv");
-const displayTimerDiv = document.querySelector("#timerText");
-const questionDiv = document.querySelector("#question");
-const scoreDiv = document.querySelector("#scoreDiv");
-const startBtn = document.querySelector("#startBtn");
-const pathRemaining = document.querySelector("#pathRemaining");
-const retryBtn = document.querySelector("#retryBtn");
-const scoreList = document.querySelector('#scoreList')
-const welcomeTimeMessage = document.querySelector("#welcomeTimeMessage")
-const quizLengthMessage = document.querySelector("#quizLengthMessage")
+// declare variable used for setInterval globally
+var quizLoop;
 
+// declare html element variables
+var timerContainer = document.querySelector("#timer");
+var welcomeDiv = document.querySelector("#welcomeDiv");
+var displayTimerDiv = document.querySelector("#timerText");
+var questionDiv = document.querySelector("#question");    
+var scoreDiv = document.querySelector("#scoreDiv");
+var startBtn = document.querySelector("#startBtn");
+var pathRemaining = document.querySelector("#pathRemaining");
+var retryBtn = document.querySelector("#retryBtn");
+var scoreList = document.querySelector("#scoreList");
+var welcomeTimeMessage = document.querySelector("#welcomeTimeMessage");
+var quizLengthMessage = document.querySelector("#quizLengthMessage");
 
+// declare event listener to begin quiz
+startBtn.addEventListener("click", runQuiz);
+retryBtn.addEventListener("click", retryQuiz);
 
-startBtn.addEventListener("click", buildQuiz);
-retryBtn.addEventListener("click", retryQuiz)
-const initialTime = quizQuest.length * 10;
-const timer = initialTime;
+// create quiz timer variable and initial value - used for % remaining calc
+var initialTime = questions.length * 10;
+var timer = initialTime;
 
 welcomeTimeMessage.textContent = formatTime();
 quizLengthMessage.textContent = questions.length;
 
-let questionNumber = 0;
+// create variable to hold current question number
+var questionNumber = 0;
 
+//main function holds timer and asks first question
+function runQuiz() {
+    console.log("runQuiz() fires");
 
-function buildQuiz() {
-
+    // hide welcome and score divs
     welcomeDiv.style.display = "none";
     scoreDiv.style.display = "none";
 
+    // show timer and question divs
     timerContainer.style.display = "block";
-    questionDiv.style.display = "block";
+    questionDiv.style.display = "block"
 
-    displayQuestion(questionNumber)
+    //ask first question
+    displayQuestion(questionNumber);
 
+    //set initial time on timer
     displayTimerDiv.textContent = formatTime();
 
-    quizLoop = setInterval(function () {
+    //begin timer set interval to 1s and run for 40s
+    quizLoop = setInterval(function() {
+
+        //decrease timer by 1s each loop
         timer--;
+        
+        pathRemaining.style.stroke = getColor();
 
-        pathRemaining.style.stroke = getColor()
-
+        //show timer value on screen
         displayTimerDiv.textContent = formatTime();
         timerContainer.style.backgroundColor = "black";
 
         setCircleDashArray();
+        //end timer at -1 to show 00:00
         if (timer < 0) {
             clearInterval(quizLoop);
             showScoreScreen();
         }
+    }, 1000);
 
-    }, 1000)
+}
 
-};
-
+// show user the current question
 function displayQuestion(questionNumber) {
+    console.log(`displayQuestion(${questionNumber}) fires.`);
 
-
+    //clear contents of question div
     questionDiv.innerHTML = "";
 
+    //only attempt to add question if question exists and timer remains on the timer
     if (questionNumber < questions.length && timer > 0) {
 
-        const newQuestion = document.createElement
+        //add current question to screen
+        var newQuestion = document.createElement("h2");
         newQuestion.textContent = questions[questionNumber].text;
         newQuestion.setAttribute("class", "question-text");
         questionDiv.appendChild(newQuestion);
@@ -151,7 +168,7 @@ function answerQuestion(answerNumber) {
         pathRemaining.style.stroke = "red";
         timerContainer.style.backgroundColor = "red";
     }
-    else {
+    else{
         timerContainer.style.backgroundColor = "rgb(0, 255, 0)";
     }
 
@@ -178,8 +195,8 @@ function showScoreScreen() {
 
     //hide question and timer div
     questionDiv.style.display = "none";
-    displayTimerDiv.style.display = "none";
-
+    displayTimerDiv.style.display = "none";  
+    
     // show score div
     scoreDiv.style.display = "block";
 
@@ -222,7 +239,7 @@ function saveUser() {
 
         })
 
-        if (scores.length > 10) {
+        if(scores.length > 10){
             scores.splice(10, 1);
         }
 
@@ -234,7 +251,7 @@ function saveUser() {
         localStorage.setItem("scores", JSON.stringify(scores));
 
     }
-    else {
+    else{
         alert("you didn't make the high score list. Try harder next time!");
     }
     displayScores(score);
@@ -245,9 +262,9 @@ function displayScores(testScore) {
 
     console.log(`displayScores(${testScore}) fires`)
     // console.log("testScore: ", testScore);
-
+    
     scoreList.innerHTML = "";
-
+    
     // get score list from local storage
     var scores = JSON.parse(localStorage.getItem("scores"));
 
@@ -259,7 +276,7 @@ function displayScores(testScore) {
         // console.log(`testScore.date: ${testScore.date} ?= scores[${i}].date: ${scores[i].date}`);
 
         // set text to score
-        score.textContent = `${i + 1}. ${scores[i].initials}  ${scores[i].score}`;
+        score.textContent = `${i+1}. ${scores[i].initials}  ${scores[i].score}`;
 
         // test if score is from quiz just taken then add class and message if so
         if (scores[i].date === testScore.date) {
@@ -272,14 +289,14 @@ function displayScores(testScore) {
 }
 
 // reset variables to initial values and call functions to begin quiz
-function retryQuiz() {
+function retryQuiz(){
     questionNumber = 0;
     timer = initialTime;
     displayTimerDiv.style.display = "block";
     setCircleDashArray();
     pathRemaining.style.stroke = getColor();
     timerContainer.style.backgroundColor = "black";
-    runQuiz();
+    runQuiz();    
 }
 
 //==================================================================
