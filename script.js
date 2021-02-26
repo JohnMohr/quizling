@@ -41,7 +41,7 @@ var startButton = document.querySelector("#start");
 var introText = document.querySelector("#intro");
 var titleText = document.querySelector("#big-text")
 var questionText = document.querySelector("#question-text")
-var chocieList = document.querySelector("#choices");
+var choiceList = document.querySelector("#choices");
 var userStats = document.querySelector("#user-stats")
 var userScore = document.querySelector("#score-display")
 var userInitials = document.querySelector("#initials-input");
@@ -60,6 +60,7 @@ var user = {
 userStats.style.display = "none";
 
 
+
 function countDown() {
     var timeInterval = setInterval(function () {
         startTime--;
@@ -71,17 +72,17 @@ function countDown() {
 }
 
 function renderQuiz() {
-    chocieList.textContent = "";
+    choiceList.textContent = "";
     questionText.textContent = quiz[index].question;
     for (i = 0; i < quiz[index].answers.length; i++) {
         var answerList = document.createElement("li");
         answerList.textContent = quiz[index].answers[i];
-        chocieList.appendChild(answerList);
+        choiceList.appendChild(answerList);
     }
 
     // When time runs out or we run out of questions, display the user's stats
     if (startTime <= 0 || index === 9) {
-        chocieList.style.display = "none";
+        choiceList.style.display = "none";
         timeLeft.style.display = "none";
         questionText.textContent = "";
         userStats.style.display = "block";
@@ -133,13 +134,15 @@ document.querySelector("#choices").addEventListener("click", function (event) {
     renderQuiz();
 })
 
+var lastHighScore = JSON.parse(localStorage.getItem("user"));
+
 highScores.addEventListener("click", function () {
     questionText.textContent = "";
     userStats.style.display = "block";
     introText.textContent = "";
     titleText.textContent = "";
     startButton.style.display = "none";
-    userResults.textContent = "Here ya go, nosy!";
+    userResults.textContent = "yea okay!";
     userInitials.value = lastHighScore.initials;
     userScore.value = lastHighScore.score;
     
